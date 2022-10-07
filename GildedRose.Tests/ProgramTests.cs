@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using GildedRose;
@@ -42,22 +43,89 @@ public class ProgramTests
 
     }
 
-    [Fact]
-    public void Test_OriginalOutput_ToActualOutput()
+    /*    [Fact]
+       public void Test_OriginalOutput_ToActualOutput()
+       {
+           //Expected
+           string expected = File.ReadAllText(@"../../../expectedoutput.txt");
+
+
+           //Actual
+           string actual = File.ReadAllText(@"../../../actualoutput.txt");
+
+           //test
+           actual.Should().BeEquivalentTo(expected);
+
+
+
+       } */
+
+    [Theory]
+    [InlineData(0, -20)]
+    [InlineData(1, -28)]
+    [InlineData(2, -25)]
+    [InlineData(3, 0)]
+    [InlineData(4, -1)]
+    [InlineData(5, -15)]
+    [InlineData(6, -20)]
+    [InlineData(7, -25)]
+    [InlineData(8, -27)]
+    public void SellIn_ForGivenItems_AfterThirtyUpdateMethodCall(int indexOfItem, int ExpectedSellIn)
     {
-        //Expected
-        string expected = File.ReadAllText(@"../../../expectedoutput.txt");
+        // Given
+        var testItem = program.Items[indexOfItem];
 
+        // When
+        for (int i = 0; i < 30; i++)
+        {
 
-        //Actual
-        string actual = File.ReadAllText(@"../../../actualoutput.txt");
+            program.UpdateQuality();
+        }
 
-        //test
-        actual.Should().BeEquivalentTo(expected);
-
-
+        // Then
+        testItem.SellIn.Should().Be(ExpectedSellIn);
 
     }
+
+
+    [Theory]
+    [InlineData(0, 0)]
+    [InlineData(1, 50)]
+    [InlineData(2, 0)]
+    [InlineData(3, 80)]
+    [InlineData(4, 80)]
+    [InlineData(5, 0)]
+    [InlineData(6, 0)]
+    [InlineData(7, 0)]
+    [InlineData(8, 0)]
+    public void Quality_ForGivenItems_AfterThirtyUpdateMethodCall(int indexOfItem, int ExpectedQuality)
+    {
+        // Given
+        var testItem = program.Items[indexOfItem];
+
+        // When
+        for (int i = 0; i < 30; i++)
+        {
+            program.UpdateQuality();
+
+        }
+
+        // Then
+        testItem.Quality.Should().Be(ExpectedQuality);
+
+    }
+
+    [Fact]
+    public void testMain()
+    {
+        // Given
+        Program.Main(new string[0]);
+        // When
+        // Then
+        true.Should().BeTrue();
+
+    }
+
 
 
     [Theory]

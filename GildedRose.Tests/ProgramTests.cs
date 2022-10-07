@@ -3,12 +3,9 @@ namespace GildedRose.Tests;
 public class ProgramTests
 {
     IList<Item> items;
-    public ProgramTests(){
-        items = new List<Item>();
-    }
 
     [Fact]
-    public void Quality_Should_Decrease_by_1_PerDay()
+    public void Quality_and_SellIn_Should_Decrease_by_1_PerDay()
     {
         items = new List<Item>{
             new Item { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20 }
@@ -16,6 +13,7 @@ public class ProgramTests
 
         Program.UpdateQuality(items);
         items[0].Quality.Should().Be(19);
+        items[0].SellIn.Should().Be(9);
 
     }
 
@@ -90,6 +88,38 @@ public class ProgramTests
     }
 
     [Fact]
+    public void Backstagepass_value_increase_3_When4DaysTillConcert()
+    {
+        items = new List<Item>{
+            new Item {
+                    Name = "Backstage passes to a TAFKAL80ETC concert",
+                    SellIn = 4,
+                    Quality = 22
+                }
+            };
+
+        Program.UpdateQuality(items);
+        items[0].Quality.Should().Be(25);
+
+    }
+
+    [Fact]
+    public void Backstagepass_value_dropTo_0_WhenConcertDone()
+    {
+        items = new List<Item>{
+            new Item {
+                    Name = "Backstage passes to a TAFKAL80ETC concert",
+                    SellIn = 0,
+                    Quality = 22
+                }
+            };
+
+        Program.UpdateQuality(items);
+        items[0].Quality.Should().Be(0);
+
+    }
+
+    [Fact]
     public void Sulfura_never_changes()
     {
         items = new List<Item>{
@@ -102,10 +132,10 @@ public class ProgramTests
     }
 
 
-    [Fact]
+    /*[Fact]
     public void Conjured_Quality_Decrease_2_perday()
     {
         throw new NotImplementedException();
-    }
+    }*/
 
 }

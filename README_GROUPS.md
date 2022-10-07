@@ -15,7 +15,7 @@
 * Group 13: nkrj, mbjn, labp
 * Group 14: bhag, aing, stmp
 * Group 15: olfw, siol, hcan
-* Group 16: json, luha, mfjo
+* Group 16: frepe, luha, mfjo
 * Group 17: pekp, luel, okre
 * Group 18: mlth, laku, aguh
 * Group 19: nicha, chbl, midf
@@ -24,7 +24,7 @@
 * Group 22: shho, lanr, atro
 * Group 23: clly, lufr, aarv
 * Group 24: dlha, aldy, jklo
-* Group 25: frepe, ojoh, emkh
+* Group 25: ojoh, emkh, json
 * Group 26: otja, biha, kmsa
 * Group 27: mhsi, ehel, mhvl
 * Group 28: unla, rafa, siar

@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace GildedRose
 {
-    class Program
+    public class Program
     {
-        IList<Item> Items;
+        public IList<Item> Items;
         static void Main(string[] args)
         {
             System.Console.WriteLine("OMGHAI!");
 
             var app = new Program()
-                          {
-                              Items = new List<Item>
+            {
+                Items = new List<Item>
                                           {
                 new Item { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20 },
                 new Item { Name = "Aged Brie", SellIn = 2, Quality = 0 },
@@ -41,7 +41,7 @@ namespace GildedRose
 				new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 }
                                           }
 
-                          };
+            };
 
             for (var i = 0; i < 31; i++)
             {
@@ -71,6 +71,8 @@ namespace GildedRose
                         }
                     }
                 }
+
+                // BACKSTAGE FUCK
                 else
                 {
                     if (Items[i].Quality < 50)
@@ -98,11 +100,15 @@ namespace GildedRose
                     }
                 }
 
+
+                // Update price
                 if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
                 {
                     Items[i].SellIn = Items[i].SellIn - 1;
                 }
 
+
+                // Update kvaliteten hvis den er mindre end 0
                 if (Items[i].SellIn < 0)
                 {
                     if (Items[i].Name != "Aged Brie")
@@ -117,6 +123,7 @@ namespace GildedRose
                                 }
                             }
                         }
+                        // Hvis det er backstage pass eller legendary then set it to zero
                         else
                         {
                             Items[i].Quality = Items[i].Quality - Items[i].Quality;
@@ -142,6 +149,7 @@ namespace GildedRose
         public int SellIn { get; set; }
 
         public int Quality { get; set; }
+
     }
 
 }

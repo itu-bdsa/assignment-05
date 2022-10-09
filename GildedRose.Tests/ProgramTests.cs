@@ -9,8 +9,27 @@ public class ProgramTests
         true.Should().BeTrue();
     }
 
+
     [Fact]
-    public void UpdateQuality_Does_Quality_Degrade() {
+    public void StadardItemNeverBelowZero()
+    {        
+        var app = new Program()
+        {
+            Items = new List<Item> {
+            new Item {Name = "+5 Dexterity Vest", SellIn = 50, Quality = 0},
+            new Item {Name = "+5 Dexterity Vest", SellIn = -10, Quality = 0}
+            }
+        };
+
+        app.UpdateQuality();
+
+        app.Items[0].Quality.Should().Be(0);
+        app.Items[1].Quality.Should().Be(0);
+    }
+
+    [Fact]
+    public void UpdateQuality_Does_Quality_Degrade()
+    {
         var app = new Program()
         {
             Items = new List<Item> {
@@ -38,7 +57,7 @@ public class ProgramTests
         app.Items[0].Quality.Should().Be(18);
     }
 
-    [Fact (Skip = "Not implemented yet")]
+    [Fact]
     public void UpdateQuality_Quality_Is_Never_Above_50() {
         var app = new Program()
         {
@@ -51,12 +70,12 @@ public class ProgramTests
 
         app.UpdateQuality();
 
-        app.Items[0].Quality.Should().Be(50);
-        app.Items[1].Quality.Should().Be(50);
-        app.Items[2].Quality.Should().Be(50);
+        app.Items[0].Quality.Should().BeLessThanOrEqualTo(50);
+        app.Items[1].Quality.Should().BeLessThanOrEqualTo(50);
+        app.Items[2].Quality.Should().BeLessThanOrEqualTo(50);
     }
 
-    [Fact (Skip = "Not implemented yet")]
+    [Fact ]
     public void UpdateQuality_Quality_Of_Brie_Stops_At_50() {
         var app = new Program()
         {
@@ -68,20 +87,6 @@ public class ProgramTests
         app.UpdateQuality();
 
         app.Items[0].Quality.Should().Be(50);
-    }
-
-    [Fact (Skip = "Not implemented yet")]
-    public void UpdateQuality_Quality_Of_Sulfuras_Is_Always_80() {
-                var app = new Program()
-        {
-            Items = new List<Item> {
-            new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 70 }
-            }
-        };
-
-        app.UpdateQuality();
-
-        app.Items[0].Quality.Should().Be(80);
     }
 
     [Fact]
@@ -145,6 +150,26 @@ public class ProgramTests
         app.Items[0].Quality.Should().Be(1);
     }
 
+
+    [Fact]
+    public void AgedBrieShoudStopAt50()
+    {
+        //Arrange
+        var app = new Program()
+        {
+            Items = new List<Item>
+            {
+                new Item { Name = "Aged Brie", SellIn = 2, Quality = 50}
+            }
+        };
+
+        //Act
+        app.UpdateQuality();
+
+        //Assert
+        app.Items[0].Quality.Should().Be(50);
+    }
+
     [Fact]
     public void QualityAndSellecreasesForShirt()
     {
@@ -188,7 +213,7 @@ public class ProgramTests
         app.Items[0].Quality.Should().Be(0);
     }
 
-    [Fact (Skip = "Not Defined In the current Build")]
+    [Fact]
     public void QualityStartingAsNegativeIsMadeNonNegative(){
         var app = new Program(){
             Items = new List<Item>{
@@ -219,7 +244,7 @@ public class ProgramTests
     }
 
     [Fact]
-    public void BackstagePassKeepsValue11DaysOut()
+    public void BackstagePassIncreaseValue11DaysOut()
     {
         var app = new Program(){
             Items = new List<Item>{
@@ -290,4 +315,32 @@ public class ProgramTests
         app.UpdateQuality();
         app.Items[0].Quality.Should().Be(0);
     }
+
+    [Fact]
+    public void BackstagePassStopIncreasingAt50()
+    {
+        var app = new Program(){
+            Items = new List<Item>{
+                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 20, Quality = 50}
+            }
+        };
+        app.UpdateQuality();
+        app.Items[0].Quality.Should().Be(50);
+    }
+
+    [Fact]
+    public void MainDoesSomethingAtAll(){
+        var writer = new StringWriter();
+        Console.SetOut(writer);
+
+        Program.Main(Array.Empty<String>());
+
+        var output = writer.ToString();
+        writer.Close();
+
+        output.Should().Contain("OMGHAI!");
+        output.Should().Contain("day 30");
+        output.Should().Contain("day 0");
+    }
+
 }

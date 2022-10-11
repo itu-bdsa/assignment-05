@@ -9,7 +9,7 @@
 * Group 7: asly, emtj, crco
 * Group 8: monha, bath, vist
 * Group 9: lawu, jakst, weny
-* Group 10: phla, dadh, frgm
+* Group 10: kmey, dadh, frgm
 * Group 11: rasni, vime, ahad
 * Group 12: mbia, nkar, maxt
 * Group 13: nkrj, mbjn, labp
@@ -37,7 +37,7 @@
 * Group 35: eikb, elbr, ssbo
 * Group 36: malsc, fefa, erja
 * Group 37: tuka, jawb, annro
-* Group 38: mbln, kmey, skas, tosp
+* Group 38: mbln, skas, tosp
 * Group 39: clwj, nsel, paab, oska
 * Group 40: millh, asgm, omac
 * Group 41: shad, tael, teim

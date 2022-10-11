@@ -2,172 +2,120 @@ namespace GildedRose.Tests;
 
 public class ProgramTests
 {
-    [Fact]
-    public void Day_0_Has_Correct_Values()
-    {
-        using var writer = new StringWriter();
-        Console.SetOut(writer);
 
-        var program = Assembly.Load(nameof(GildedRose));
-        program.EntryPoint?.Invoke(null, new[] { Array.Empty<string>() });
+    private List<Item> items;
+    public ProgramTests() {
 
-        var start = 1;
-        var end = 12;
-        var outputString = "";
-
-        var output = writer.GetStringBuilder().ToString().TrimEnd().Split(Environment.NewLine);     
-
-        for (var i = start; i < end; i++) {
-            outputString = outputString + output[i];
-        }
-
-        outputString.Should().Be("-------- day 0 --------name, sellIn, quality+5 Dexterity Vest, 10, 20Aged Brie, 2, 0Elixir of the Mongoose, 5, 7Sulfuras, Hand of Ragnaros, 0, 80Sulfuras, Hand of Ragnaros, -1, 80Backstage passes to a TAFKAL80ETC concert, 15, 20Backstage passes to a TAFKAL80ETC concert, 10, 49Backstage passes to a TAFKAL80ETC concert, 5, 49Conjured Mana Cake, 3, 6");
-
-    }
-
-    [Fact]
-    public void Day_1_Has_Correct_Values()
-    {
-        using var writer = new StringWriter();
-        Console.SetOut(writer);
-
-        var program = Assembly.Load(nameof(GildedRose));
-        program.EntryPoint?.Invoke(null, new[] { Array.Empty<string>() });
-
-        var start = 13;
-        var end = 24;
-        var outputString = "";
-
-        var output = writer.GetStringBuilder().ToString().TrimEnd().Split(Environment.NewLine);     
-
-        for (var i = start; i < end; i++) {
-                outputString = outputString + output[i];
-            }
-
-
-        outputString.Should().Be("-------- day 3 --------name, sellIn, quality+5 Dexterity Vest, 7, 17Aged Brie, -1, 3Elixir of the Mongoose, 2, 4Sulfuras, Hand of Ragnaros, -3, 20Sulfuras, Hand of Ragnaros, -4, 20Backstage passes to a TAFKAL80ETC concert, 12, 23Backstage passes to a TAFKAL80ETC concert, 7, 55Backstage passes to a TAFKAL80ETC concert, 2, 58Conjured Mana Cake, 0, 3");
-
-    }
-
-    [Fact]
-    public void Day_3_Has_Correct_Values()
-    {
-        using var writer = new StringWriter();
-        Console.SetOut(writer);
-
-        var program = Assembly.Load(nameof(GildedRose));
-        program.EntryPoint?.Invoke(null, new[] { Array.Empty<string>() });
-
-        var start = 37;
-        var end = 48;
-        var outputString = "";
-
-        var output = writer.GetStringBuilder().ToString().TrimEnd().Split(Environment.NewLine);     
-
-        for (var i = start; i < end; i++) {
-                outputString = outputString + output[i];
-            }
-
-
-        outputString.Should().Be("-------- day 3 --------name, sellIn, quality+5 Dexterity Vest, 7, 17Aged Brie, -1, 3Elixir of the Mongoose, 2, 4Sulfuras, Hand of Ragnaros, -3, 20Sulfuras, Hand of Ragnaros, -4, 20Backstage passes to a TAFKAL80ETC concert, 12, 23Backstage passes to a TAFKAL80ETC concert, 7, 55Backstage passes to a TAFKAL80ETC concert, 2, 58Conjured Mana Cake, 0, 3");
-
-    }
-
-    [Fact]
-    public void Given_Items_Should_Update_Quality_And_SellIn_3_Times(){
-
-        var app = new GildedRose.Program()
-                          {
-                              Items = new List<Item>
-                                          {
-                new Item { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20 },
-                new Item { Name = "Aged Brie", SellIn = 2, Quality = 0 },
-                new Item { Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7 },
-                new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 },
-                new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 80 },
-                new Item
-                {
-                    Name = "Backstage passes to a TAFKAL80ETC concert",
-                    SellIn = 15,
-                    Quality = 20
-                },
-                new Item
-                {
-                    Name = "Backstage passes to a TAFKAL80ETC concert",
-                    SellIn = 10,
-                    Quality = 49
-                },
-                new Item
-                {
-                    Name = "Backstage passes to a TAFKAL80ETC concert",
-                    SellIn = 5,
-                    Quality = 49
-                },
-				// this conjured item does not work properly yet
-				new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 }
-                                          }
-
-                          };
-
+        var app = new GildedRose.Program();
+        app.Items = new List<Item> { new Item { Name = "Vest", SellIn = 10, Quality = 20 },
+                                     new Item { Name = "Jacket", SellIn = 0, Quality = 10},
+                                     new Item { Name = "Poor Jacket", SellIn = 0, Quality = 1},
+                                     new Item { Name = "Aged Brie", SellIn = 5, Quality = 47},
+                                     new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
+                                     new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 30},
+                                     new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 30},
+                                     new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 30},
+                                     new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 1, Quality = 30} };
         app.UpdateQuality();
         app.UpdateQuality();
         app.UpdateQuality();
-
-
-        var itemsResult = new List<Item>();
-        itemsResult.AddRange(new Item[] {
-                new Item { Name = "+5 Dexterity Vest", SellIn = 7, Quality = 17 },
-                new Item { Name = "Aged Brie", SellIn = -1, Quality = 4 },
-                new Item { Name = "Elixir of the Mongoose", SellIn = 2, Quality = 4 },
-                new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 },
-                new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 80 },
-                new Item
-                {
-                    Name = "Backstage passes to a TAFKAL80ETC concert",
-                    SellIn = 12,
-                    Quality = 23
-                },
-                new Item
-                {
-                    Name = "Backstage passes to a TAFKAL80ETC concert",
-                    SellIn = 7,
-                    Quality = 50
-                },
-                new Item
-                {
-                    Name = "Backstage passes to a TAFKAL80ETC concert",
-                    SellIn = 2,
-                    Quality = 50
-                },
-				// this conjured item does not work properly yet
-				new Item { Name = "Conjured Mana Cake", SellIn = 0, Quality = 3 }});
-
-
-
-
-        app.Items.Should().BeEquivalentTo(itemsResult);
+        app.UpdateQuality();
+        app.UpdateQuality();
+        items = app.Items.ToList();
 
     }
 
-    /*
-    [Fact]
-    public void Given_Items_If_Correct_Quaility_Return_True(){
-    IList<Item> Items;
-    Items = new List<Item>
-        {
-        new Item { Name = "+5 Dexterity Vest", SellIn = 12, Quality = 15 },
-        new Item { Name = "Aged Brie", SellIn = 5, Quality = 2 },
-        new Item { Name = "Elixir of the Mongoose", SellIn = 7, Quality = 7 },
-        new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 1, Quality = 80 },
-        new Item
-                {
-                    Name = "Backstage passes to a TAFKAL80ETC concert",
-                    SellIn = 10,
-                    Quality = 30
-                }
-        };
-    }
-    */
     
+    [Fact]
+    public void Program_Output_Is_Correct_Output() {
+        
+        using var writer = new StringWriter();
+        Console.SetOut(writer);
+
+        var program = Assembly.Load(nameof(GildedRose));
+        program.EntryPoint?.Invoke(null, new[] { Array.Empty<string>() });
+
+        var output = writer.GetStringBuilder().ToString().TrimEnd();     
+        var outputFile = File.ReadAllText(@"../../../output.txt");
+
+        output.Should().Be(outputFile);
+    }
+    
+
+    [Fact]
+    public void Vest_Quality_Is_15_After_5_Days() {
+
+        items[0].Quality.Should().Be(15);
+
+    }
+
+    [Fact]
+    public void Vest_SellIn_Is_5_After_5_Days() {
+
+        items[0].SellIn.Should().Be(5);
+
+    }
+
+    [Fact]
+    public void Jacket_Quality_Is_0_After_5_Days() {
+
+    
+        items[1].Quality.Should().Be(0);
+
+    }
+
+    [Fact]
+    public void Poor_Jacket_Quality_Is_0_After_5_Days() {
+
+    
+        items[2].Quality.Should().Be(0);
+
+    }
+
+    [Fact]
+    public void Aged_Brie_Quality_Is_50_After_5_Days() {
+
+    
+        items[3].Quality.Should().Be(50);
+
+    }
+
+    [Fact]
+    public void Sulfuras_Doesnt_Change() {
+
+    
+        items[4].Quality.Should().Be(80);
+
+    }
+
+    [Fact]
+    public void Backstage_Pass_Increase_To_35() {
+
+    
+        items[5].Quality.Should().Be(35);
+
+    }
+
+    [Fact]
+    public void Backstage_Pass_Increase_To_40() {
+
+        items[6].Quality.Should().Be(40);
+
+    }
+
+    [Fact]
+    public void Backstage_Pass_Increase_To_45() {
+
+    
+        items[7].Quality.Should().Be(45);
+
+    }
+
+    [Fact]
+    public void Backstage_Pass_Quality_Becomes_0() {
+
+        items[8].Quality.Should().Be(0);
+
+    }
 
 }

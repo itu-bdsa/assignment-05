@@ -114,20 +114,13 @@ public class ProgramTests
 
     }
 
-/*
-This cursed method gives 100% coverage, but it doesnt make sense to test like this.
-This is also in the discord thread for assignment 5. 
+
     [Fact]
     public void testMain()
     {
-        // Given
         Program.Main(new string[0]);
-        // When
-        // Then
-        true.Should().BeTrue();
 
     }
-*/
 
 
     [Theory]

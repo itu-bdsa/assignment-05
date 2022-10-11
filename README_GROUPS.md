@@ -27,7 +27,7 @@
 * Group 25: frepe, ojoh, emkh
 * Group 26: otja, biha, kmsa
 * Group 27: mhsi, ehel, mhvl
-* Group 28: unla, rafa, siar
+* Group 28: rafa, siar
 * Group 29: phimo, tcla, frai
 * Group 30: jwni, emno, tuho
 * Group 31: behv, nihp, tbru

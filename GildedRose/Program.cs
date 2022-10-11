@@ -37,7 +37,7 @@ namespace GildedRose
                     SellIn = 5,
                     Quality = 49
                 },
-				// this conjured item does not work properly yet
+
 				new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 }
                                           }
 
@@ -54,90 +54,104 @@ namespace GildedRose
                 Console.WriteLine("");
                 app.UpdateQuality();
             }
-
         }
+
+        public int increase(int start, int add = 1){
+            return Math.Min(50, start+add);
+        }
+
+        public int decrease(int start, int remove = 1) {
+            return Math.Max(0, start-remove);
+        }
+
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (Item item in Items)
             {
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                {
-                    if (Items[i].Quality > 0)
-                    {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-                    }
+                if (item.Name == "Sulfuras, Hand of Ragnaros") {
+                    continue;
                 }
-                else
-                {
-                    if (Items[i].Quality < 50)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (Items[i].SellIn < 11)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-
-                            if (Items[i].SellIn < 6)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-                        }
-                    }
+  
+                if (item.Name == "Aged Brie") {
+                    updateBrie(item);
+                    condition(item);
+                    continue;
                 }
 
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    Items[i].SellIn = Items[i].SellIn - 1;
+                if (item.Name == "Backstage passes to a TAFKAL80ETC concert") {
+                    updateBackstage(item);
+                    condition(item);
+                    continue;
                 }
 
-                if (Items[i].SellIn < 0)
-                {
-                    if (Items[i].Name != "Aged Brie")
-                    {
-                        if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (Items[i].Quality > 0)
-                            {
-                                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                                {
-                                    Items[i].Quality = Items[i].Quality - 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
-                        }
-                    }
-                    else
-                    {
-                        if (Items[i].Quality < 50)
-                        {
-                            Items[i].Quality = Items[i].Quality + 1;
-                        }
-                    }
+                if (!isSulfuras && !isBrie && !isBackstage && !isConjured) {
+                    updateItem(item);
+                    condition(item);
+                    continue;
+                }
+
+                if (item.Name!.Contains("Conjured", StringComparison.OrdinalIgnoreCase)) {
+                    updateItem(item, 2);
+                    condition(item);
+                    continue;
                 }
             }
         }
+    
 
+    public void updateItem(Item item, int number = 1) {
+        item.Quality = decrease(item.Quality, number);
+        item.SellIn--;
+        if(expired(item.SellIn)){
+            item.Quality = decrease(item.Quality, number);
+        }
     }
+
+    public void updateBrie(Item item) {
+        item.Quality = increase(item.Quality);
+        item.SellIn--;
+        if(expired(item.SellIn))
+        {
+            item.Quality = increase(item.Quality);
+        }
+    }
+
+    public void updateBackstage(Item item) {
+        if(item.SellIn >= 11)
+        {
+            item.Quality = increase(item.Quality, 1);
+        }
+        if(item.SellIn is >= 6 and <= 10)
+        {
+            item.Quality = increase(item.Quality, 2);
+        }
+        if(item.SellIn is >= 0 and <= 5)
+        {
+            item.Quality = increase(item.Quality, 3);
+        }
+
+        item.SellIn--;
+
+        if(expired(item.SellIn))
+        {
+            item.Quality = 0;
+        }
+    }
+
+    public void condition(Item item) {
+        item.Quality = increase(item.Quality, 0);
+        item.Quality = decrease(item.Quality, 0);
+    }
+
+    public bool expired(Int sellIn) {
+        return sellIn < 0;
+    }
+}
 
     public class Item
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public int SellIn { get; set; }
 

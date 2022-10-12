@@ -15,7 +15,9 @@ public class ProgramTests
                                      new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 30},
                                      new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 30},
                                      new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 30},
-                                     new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 1, Quality = 30} };
+                                     new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 1, Quality = 30},
+                                     new Item { Name = "Conjured", SellIn = 10, Quality = 30} };
+
         app.UpdateQuality();
         app.UpdateQuality();
         app.UpdateQuality();
@@ -115,6 +117,13 @@ public class ProgramTests
     public void Backstage_Pass_Quality_Becomes_0() {
 
         items[8].Quality.Should().Be(0);
+
+    }
+
+    [Fact]
+    public void Conjured_Quality_Becomes_20() {
+
+        items[9].Quality.Should().Be(20);
 
     }
 
